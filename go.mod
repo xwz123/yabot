@@ -19,8 +19,12 @@ replace (
 )
 
 require (
+	gitee.com/openeuler/go-gitee v0.0.0-20210226091009-de349c8d2916
+	github.com/antihax/optional v1.0.0
+	github.com/huaweicloud/golangsdk v0.0.0-20210302113304-41351a12edfc
 	github.com/prometheus/client_golang v1.5.0
 	github.com/sirupsen/logrus v1.4.2
+	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	k8s.io/apimachinery v0.17.3
 	k8s.io/test-infra v0.0.0-20200522021239-7ab687ff3213
 	sigs.k8s.io/yaml v1.2.0

@@ -3240,8 +3240,8 @@ def go_dependencies():
         build_file_generation = "on",
         build_file_proto_mode = "disable",
         importpath = "gopkg.in/yaml.v2",
-        sum = "h1:obN1ZagJSUGI0Ek/LBmuj4SNLPfIny3KsKFopxRdj10=",
-        version = "v2.2.8",
+        sum = "h1:clyUAQHOM3G0M3f5vQj7LuJrETvjVot3Z5el9nffUtU=",
+        version = "v2.3.0",
     )
     go_repository(
         name = "in_gopkg_yaml_v3",
@@ -3596,8 +3596,8 @@ def go_dependencies():
         build_file_generation = "on",
         build_file_proto_mode = "disable",
         importpath = "golang.org/x/crypto",
-        sum = "h1:xMPOj6Pz6UipU1wXLkrtqpHbR0AVFnyPEQq/wRWz9lM=",
-        version = "v0.0.0-20200302210943-78000ba7a073",
+        sum = "h1:vclmkQCjlDX5OydZ9wv8rBCcS0QyQY66Mpf/7BZbInM=",
+        version = "v0.0.0-20200820211705-5c72a883971a",
     )
     go_repository(
         name = "org_golang_x_exp",
@@ -3823,4 +3823,28 @@ def go_dependencies():
         importpath = "gomodules.xyz/jsonpatch/v2",
         sum = "h1:Phva6wqu+xR//Njw6iorylFFgn/z547tw5Ne3HZPQ+k=",
         version = "v2.1.0",
+    )
+    go_repository(
+        name = "com_gitee_openeuler_go_gitee",
+        build_file_generation = "on",
+        build_file_proto_mode = "disable",
+        importpath = "gitee.com/openeuler/go-gitee",
+        sum = "h1:av1uYnm0nHQqpiEX6sY+9DXCYMmk6F9YbuMEjf6Aixc=",
+        version = "v0.0.0-20210226091009-de349c8d2916",
+    )
+    go_repository(
+        name = "com_github_antihax_optional",
+        build_file_generation = "on",
+        build_file_proto_mode = "disable",
+        importpath = "github.com/antihax/optional",
+        sum = "h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=",
+        version = "v1.0.0",
+    )
+    go_repository(
+        name = "com_github_huaweicloud_golangsdk",
+        build_file_generation = "on",
+        build_file_proto_mode = "disable",
+        importpath = "github.com/huaweicloud/golangsdk",
+        sum = "h1:CBrAHWGyqIEEh6xvoplHpCX28EE50yApRC1AwqOvc2s=",
+        version = "v0.0.0-20210302113304-41351a12edfc",
     )

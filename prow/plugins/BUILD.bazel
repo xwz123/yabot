@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "export.go",
+        "respond.go",
+    ],
+    importpath = "github.com/opensourceways/yabot/prow/plugins",
+    visibility = ["//visibility:public"],
+    deps = ["@io_k8s_test_infra//prow/github:go_default_library"],
+)
