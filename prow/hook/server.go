@@ -28,12 +28,11 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-
 	"k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/github"
-	"k8s.io/test-infra/prow/plugins"
 
 	_ "github.com/opensourceways/yabot/prow/hook/plugin-imports"
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 // Server implements http.Handler. It validates incoming GitHub webhooks and

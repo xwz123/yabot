@@ -21,9 +21,9 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/sirupsen/logrus"
-
 	"k8s.io/test-infra/prow/github"
-	"k8s.io/test-infra/prow/plugins"
+
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 const failedCommentCoerceFmt = "Could not coerce %s event to a GenericCommentEvent. Unknown 'action': %q."

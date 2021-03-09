@@ -25,8 +25,9 @@ import (
 	"k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/github"
 	"k8s.io/test-infra/prow/phony"
-	"k8s.io/test-infra/prow/plugins"
 	"k8s.io/test-infra/prow/repoowners"
+
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 var ice = github.IssueCommentEvent{

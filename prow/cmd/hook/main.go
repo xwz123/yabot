@@ -24,24 +24,23 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"k8s.io/test-infra/prow/bugzilla"
-	"k8s.io/test-infra/prow/interrupts"
-
 	"k8s.io/test-infra/pkg/flagutil"
+	"k8s.io/test-infra/prow/bugzilla"
 	"k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/config/secret"
 	prowflagutil "k8s.io/test-infra/prow/flagutil"
 	"k8s.io/test-infra/prow/git/v2"
+	"k8s.io/test-infra/prow/interrupts"
 	"k8s.io/test-infra/prow/logrusutil"
 	"k8s.io/test-infra/prow/metrics"
 	"k8s.io/test-infra/prow/pjutil"
-	pluginhelp "k8s.io/test-infra/prow/pluginhelp/hook"
-	"k8s.io/test-infra/prow/plugins"
 	bzplugin "k8s.io/test-infra/prow/plugins/bugzilla"
 	"k8s.io/test-infra/prow/repoowners"
 	"k8s.io/test-infra/prow/slack"
 
 	"github.com/opensourceways/yabot/prow/hook"
+	pluginhelp "github.com/opensourceways/yabot/prow/pluginhelp/hook"
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 type options struct {

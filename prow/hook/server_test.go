@@ -23,7 +23,7 @@ import (
 	"strings"
 	"testing"
 
-	"k8s.io/test-infra/prow/plugins"
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 func TestServeHTTPErrors(t *testing.T) {

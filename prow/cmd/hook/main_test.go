@@ -24,7 +24,8 @@ import (
 
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/test-infra/prow/flagutil"
-	"k8s.io/test-infra/prow/plugins"
+
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 // Make sure that our plugins are valid.
