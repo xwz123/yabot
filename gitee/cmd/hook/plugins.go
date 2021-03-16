@@ -4,11 +4,11 @@ import (
 	prowConfig "k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/github"
 	"k8s.io/test-infra/prow/pluginhelp"
-	originp "k8s.io/test-infra/prow/plugins"
 
 	"github.com/opensourceways/yabot/gitee/gitee"
 	"github.com/opensourceways/yabot/gitee/plugins"
 	"github.com/opensourceways/yabot/gitee/plugins/cla"
+	originp "github.com/opensourceways/yabot/prow/plugins"
 )
 
 func initPlugins(cfg prowConfig.Getter, agent *plugins.ConfigAgent, pm plugins.Plugins, cs *clients) error {

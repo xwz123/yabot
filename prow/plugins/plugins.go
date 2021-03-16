@@ -450,7 +450,8 @@ var configMapSizeGauges = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 }, []string{"name", "namespace"})
 
 func init() {
-	prometheus.MustRegister(configMapSizeGauges)
+	// TODO(zengchen1024): Find out where import k8s.io/test-infra/prow/plugins.
+	// prometheus.MustRegister(configMapSizeGauges)
 }
 
 // Metrics is a set of metrics that are gathered by plugins.

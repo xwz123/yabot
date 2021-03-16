@@ -23,8 +23,9 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"k8s.io/test-infra/prow/labels"
-	origin "k8s.io/test-infra/prow/plugins"
 	"sigs.k8s.io/yaml"
+
+	origin "github.com/opensourceways/yabot/prow/plugins"
 )
 
 type PluginConfig interface {

@@ -84,6 +84,7 @@ type Configuration struct {
 	Triggers                   []Trigger                    `json:"triggers,omitempty"`
 	Welcome                    []Welcome                    `json:"welcome,omitempty"`
 	Override                   Override                     `json:"override"`
+	CLA                        []CLA                        `json:"cla,omitempty"`
 }
 
 // Golint holds configuration for the golint plugin
@@ -1131,6 +1132,9 @@ func (c *Configuration) Validate() error {
 		return err
 	}
 	if err := validateTrigger(c.Triggers); err != nil {
+		return err
+	}
+	if err := validateCLA(c.CLA); err != nil {
 		return err
 	}
 

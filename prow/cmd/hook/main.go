@@ -34,7 +34,6 @@ import (
 	"k8s.io/test-infra/prow/logrusutil"
 	"k8s.io/test-infra/prow/metrics"
 	"k8s.io/test-infra/prow/pjutil"
-	bzplugin "k8s.io/test-infra/prow/plugins/bugzilla"
 	"k8s.io/test-infra/prow/repoowners"
 	"k8s.io/test-infra/prow/slack"
 
@@ -138,7 +137,7 @@ func main() {
 	}
 
 	var bugzillaClient bugzilla.Client
-	if orgs, repos := pluginAgent.Config().EnabledReposForPlugin(bzplugin.PluginName); orgs != nil || repos != nil {
+	if orgs, repos := pluginAgent.Config().EnabledReposForPlugin("bugzilla"); orgs != nil || repos != nil {
 		client, err := o.bugzilla.BugzillaClient(secretAgent)
 		if err != nil {
 			logrus.WithError(err).Fatal("Error getting Bugzilla client.")
@@ -222,9 +221,9 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {})
 
 	// For /hook, handle a webhook normally.
-	http.Handle("/hook", server)
+	http.Handle("/github-hook", server)
 	// Serve plugin help information from /plugin-help.
-	http.Handle("/plugin-help", pluginhelp.NewHelpAgent(pluginAgent, githubClient))
+	http.Handle("/github-plugin-help", pluginhelp.NewHelpAgent(pluginAgent, githubClient))
 
 	httpServer := &http.Server{Addr: ":" + strconv.Itoa(o.port)}
 

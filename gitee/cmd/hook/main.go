@@ -37,13 +37,13 @@ import (
 	"k8s.io/test-infra/prow/logrusutil"
 	"k8s.io/test-infra/prow/metrics"
 	"k8s.io/test-infra/prow/pjutil"
-	pluginhelp "k8s.io/test-infra/prow/pluginhelp/hook"
 	"k8s.io/test-infra/prow/repoowners"
 
 	giteeflagutil "github.com/opensourceways/yabot/gitee/flagutil"
 	"github.com/opensourceways/yabot/gitee/gitee"
 	"github.com/opensourceways/yabot/gitee/hook"
 	"github.com/opensourceways/yabot/gitee/plugins"
+	pluginhelp "github.com/opensourceways/yabot/prow/pluginhelp/hook"
 )
 
 type options struct {

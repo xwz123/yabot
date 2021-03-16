@@ -26,16 +26,15 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"sigs.k8s.io/yaml"
-
 	"k8s.io/apimachinery/pkg/api/equality"
 	"k8s.io/apimachinery/pkg/util/sets"
-
 	"k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/github"
 	"k8s.io/test-infra/prow/github/fakegithub"
-	"k8s.io/test-infra/prow/plugins"
 	"k8s.io/test-infra/prow/repoowners"
+	"sigs.k8s.io/yaml"
+
+	"github.com/opensourceways/yabot/prow/plugins"
 )
 
 type fakeOwnersClient struct {
