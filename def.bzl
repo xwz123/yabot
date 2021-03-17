@@ -61,21 +61,27 @@ def push_image(
 # prefix returns the image prefix for the command.
 #
 # Concretely, image("foo") returns "{EDGE_PROW_REPO}/foo"
-# which usually becomes xwzqmxx/foo
+# which usually becomes gcr.io/k8s-prow/foo
 def prefix(cmd):
     return "{STABLE_PROW_REPO}%s" % cmd
+
+# target returns the image target for the command.
+#
+# Concretely, target("foo") returns "//prow/cmd/foo:image"
+def target(cmd):
+    return "//prow/cmd/%s:image" % cmd
+
 
 # tags returns a {image: target} map for each cmd or {name: target}
 # Concretely, tags("hook",  **{"ghproxy": "//ghproxy:image"}) will output the following:
 #  {
-#   "xwzqmxx/hook:20210203-defada"://prow/cmd/hook:image
-#   "xwzqmxx/hook:latest" //prow/cmd/hook:image
-#   "xwzqmxx/hook:latest-root" //prow/cmd/hook:image
-#   "xwzqmxx/ghproxy:20180203-deadbeef": "//ghproxy:image",
-#   "xwzqmxx/ghproxy:latest": "//ghproxy:image",
-#   "xwzqmxx/ghproxy:latest-fejta": "//ghproxy:image",
+#   "gcr.io/k8s-prow/hook:20210203-deadbeef": //prow/cmd/hook:image
+#   "gcr.io/k8s-prow/hook:latest": //prow/cmd/hook:image
+#   "gcr.io/k8s-prow/hook:latest-root": //prow/cmd/hook:image
+#   "gcr.io/k8s-prow/ghproxy:20180203-deadbeef": "//ghproxy:image",
+#   "gcr.io/k8s-prow/ghproxy:latest": "//ghproxy:image",
+#   "gcr.io/k8s-prow/ghproxy:latest-root": "//ghproxy:image",
 #  }
-
 def tags(cmds, targets):
     cmd_targets = {prefix(cmd): target(cmd) for cmd in cmds}
     return _image_tags(cmd_targets)
