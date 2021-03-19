@@ -8,6 +8,7 @@ push_image(
     name = "release-push",
     bundle_name = "release",
     images = tags(
+        platform = "prow",
         cmds = ["hook"],
         targets = {},
     ),
