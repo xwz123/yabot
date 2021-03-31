@@ -19,6 +19,7 @@ package pluginimports
 // We need to empty import all enabled plugins so that they will be linked into
 // any hook binary.
 import (
+	_ "github.com/opensourceways/yabot/prow/plugins/approve"
 	_ "github.com/opensourceways/yabot/prow/plugins/cla"
 	_ "github.com/opensourceways/yabot/prow/plugins/lgtm"
 )
