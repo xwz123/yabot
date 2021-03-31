@@ -7,6 +7,7 @@ import (
 
 	"github.com/opensourceways/yabot/gitee/gitee"
 	"github.com/opensourceways/yabot/gitee/plugins"
+	"github.com/opensourceways/yabot/gitee/plugins/approve"
 	"github.com/opensourceways/yabot/gitee/plugins/cla"
 	originp "github.com/opensourceways/yabot/prow/plugins"
 )
@@ -18,6 +19,7 @@ func initPlugins(cfg prowConfig.Getter, agent *plugins.ConfigAgent, pm plugins.P
 
 	var v []plugins.Plugin
 	v = append(v, cla.NewCLA(gpc, cs.giteeClient))
+	v = append(v, approve.NewApprove(gpc, cs.giteeClient, cs.ownersClient))
 
 	for _, i := range v {
 		name := i.PluginName()

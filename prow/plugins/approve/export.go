@@ -1,5 +1,9 @@
 package approve
 
+import (
+	"k8s.io/test-infra/prow/github"
+)
+
 func NewState(org, repo, branch, body, author, url string, number int, assignees []github.User) *state {
 	return &state{
 		org:       org,

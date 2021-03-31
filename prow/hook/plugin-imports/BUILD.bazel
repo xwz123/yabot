@@ -6,6 +6,7 @@ go_library(
     importpath = "github.com/opensourceways/yabot/prow/hook/plugin-imports",
     visibility = ["//visibility:public"],
     deps = [
+        "//prow/plugins/approve:go_default_library",
         "//prow/plugins/cla:go_default_library",
         "//prow/plugins/lgtm:go_default_library",
     ],
