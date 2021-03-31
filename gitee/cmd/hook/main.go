@@ -240,3 +240,12 @@ type githubClientForRepoOwner struct {
 
 	giteeClient gitee.Client
 }
+
+
+func (gc *githubClientForRepoOwner) ListCollaborators(org, repo string) ([]github.User, error) {
+	return gc.giteeClient.ListCollaborators(org, repo)
+}
+
+func (gc *githubClientForRepoOwner) GetRef(org, repo, ref string) (string, error) {
+	return gc.giteeClient.GetRef(org, repo, ref)
+}
