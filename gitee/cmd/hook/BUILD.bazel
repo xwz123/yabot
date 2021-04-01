@@ -13,6 +13,7 @@ go_library(
         "//gitee/gitee:go_default_library",
         "//gitee/hook:go_default_library",
         "//gitee/plugins:go_default_library",
+        "//gitee/plugins/associate:go_default_library",
         "//gitee/plugins/cla:go_default_library",
         "//prow/pluginhelp/hook:go_default_library",
         "//prow/plugins:go_default_library",
