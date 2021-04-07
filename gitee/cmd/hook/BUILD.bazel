@@ -1,4 +1,11 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//:def.bzl", "build_image")
+
+build_image(
+    name = "image",
+    base = "@git-base//image",
+    visibility = ["//visibility:public"],
+)
 
 go_library(
     name = "go_default_library",

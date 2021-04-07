@@ -67,9 +67,10 @@ def prefix(platform,cmd):
 
 # target returns the image target for the command.
 #
-# Concretely, target("foo") returns "//prow/cmd/foo:image"
-def target(cmd):
-    return "//prow/cmd/%s:image" % cmd
+# Concretely, target("prow","foo") returns "//prow/cmd/foo:image"
+# Concretely, target("gitee","foo") returns "//gitee/cmd/foo:image"
+def target(platform,cmd):
+    return "//%s/cmd/%s:image" % (platform,cmd)
 
 
 # tags returns a {image: target} map for each cmd or {name: target}
@@ -83,5 +84,5 @@ def target(cmd):
 #   "gcr.io/k8s-prow/prow-ghproxy:latest-root": "//ghproxy:image",
 #  }
 def tags(platform,cmds, targets):
-    cmd_targets = {prefix(platform,cmd): target(cmd) for cmd in cmds}
+    cmd_targets = {prefix(platform,cmd): target(platform,cmd) for cmd in cmds}
     return _image_tags(cmd_targets)

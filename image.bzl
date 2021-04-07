@@ -30,10 +30,10 @@
 #     "foo:latest-fejta": "//bar",
 #     "foo:20180203-deadbeef", "//bar",
 #   }
+# outs["%s:latest-{BUILD_USER}" % img] = target
 def tags(targets):
     outs = {}
     for img, target in targets.items():
         outs["%s:{DOCKER_TAG}" % img] = target
-        outs["%s:latest-{BUILD_USER}" % img] = target
         outs["%s:latest" % img] = target
     return outs
