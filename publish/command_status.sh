@@ -8,7 +8,6 @@ git_commit="$(git describe --tags --always --dirty)"
 build_date="$(date -u '+%Y%m%d')"
 docker_tag="v${build_date}-${git_commit}"
 
-# xwzqmxx/ is the dockerhub repo,because we test docker push on dockerhub
 cat <<EOF
 STABLE_PROW_REPO ${PROW_REPO_OVERRIDE:-swr.ap-southeast-1.myhuaweicloud.com/opensourceway/yabot/}
 STABLE_BUILD_GIT_COMMIT ${git_commit}

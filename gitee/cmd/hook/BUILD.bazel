@@ -1,10 +1,19 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("//:def.bzl", "build_image")
+load("//:def.bzl", "build_image","push_image", "single_tags")
 
 build_image(
     name = "image",
     base = "@git-base//image",
     visibility = ["//visibility:public"],
+)
+
+push_image(
+    name = "push",
+     bundle_name = "release",
+     images = single_tags(
+         platform = "gitee",
+         cmds = {"hook": "//gitee/cmd/hook:image"}
+     )
 )
 
 go_library(

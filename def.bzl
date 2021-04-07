@@ -58,12 +58,20 @@ def push_image(
         format = "Docker",
     )
 
+# platform_prefix returns the image prefix from gitee or prow for the command.
+#
+# Concretely, image("foo") returns "{EDGE_PROW_REPO}/foo"
+# which usually becomes gcr.io/k8s-prow/prow-foo
+def platform_prefix(platform,cmd):
+    return "{STABLE_PROW_REPO}%s-%s" % (platform,cmd)
+
+
 # prefix returns the image prefix for the command.
 #
 # Concretely, image("foo") returns "{EDGE_PROW_REPO}/foo"
 # which usually becomes gcr.io/k8s-prow/foo
-def prefix(platform,cmd):
-    return "{STABLE_PROW_REPO}%s-%s" % (platform,cmd)
+def prefix(cmd):
+    return "{STABLE_PROW_REPO}/%s" % cmd
 
 # target returns the image target for the command.
 #
@@ -84,5 +92,15 @@ def target(platform,cmd):
 #   "gcr.io/k8s-prow/prow-ghproxy:latest-root": "//ghproxy:image",
 #  }
 def tags(platform,cmds, targets):
-    cmd_targets = {prefix(platform,cmd): target(platform,cmd) for cmd in cmds}
+    cmd_targets = {platform_prefix(platform, cmd): target(platform, cmd) for cmd in cmds}
+    cmd_targets.update({prefix(p): t for (p, t) in targets.items()})
     return _image_tags(cmd_targets)
+
+def single_tags(platform,cmds):
+    print(platform,cmds)
+    cmd_targs = {}
+    if platform == "":
+        cmd_targs.update({prefix(p): t for (p,t) in cmds.items()})
+    else:
+        cmd_targs.update({platform_prefix(platform,p): t for (p,t) in cmds.items()})
+    return _image_tags(cmd_targs)

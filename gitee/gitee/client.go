@@ -248,7 +248,7 @@ func (c *client) ListPRComments(org, repo string, number int) ([]sdk.PullRequest
 	return r, nil
 }
 
-func (c *client) ListPrIssues(org, repo string, number int32) ([] sdk.Issue, error) {
+func (c *client) ListPrIssues(org, repo string, number int32) ([]sdk.Issue, error) {
 	var issues []sdk.Issue
 	p := int32(1)
 	opt := sdk.GetV5ReposOwnerRepoPullsNumberIssuesOpts{}

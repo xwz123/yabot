@@ -1,0 +1,32 @@
+dist: xenial
+os:
+  - linux
+
+python:
+  - "2.7"
+
+jdk:
+  - oraclejdk8
+
+language: go
+
+go:
+  - 1.13.x
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8'
+        key_url: 'https://bazel.build/bazel-release.pub.gpg'
+    packages:
+      - bazel-3.4.1
+before_install:
+  - go get -v golang.org/x/lint/golint
+
+install:
+    - wget -q https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
+    - chmod +x ./buildifier
+    - sudo ln -s /usr/bin/bazel-3.4.1 /usr/bin/bazel
+
+script:
+  -./publish/travis_check.sh
