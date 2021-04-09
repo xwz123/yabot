@@ -41,6 +41,16 @@ please run 'golint ./...' on your changes before committing."
   fi
 }
 
+run_govet() {
+  GOVET_ERRORS=$(go vet ./... 2>&1)
+  if [ -n "$GOVET_ERRORS" ]
+  then
+    log_error "go vet failed for the following reasons:
+$GOVET_ERRORS
+please run 'go vet ./... ' on your changes before committing."
+    exit 1
+  fi
+}
 
 run_unit_tests() {
   if [ -z "$NOTEST" ]

@@ -24,9 +24,10 @@ before_install:
   - go get -v golang.org/x/lint/golint
 
 install:
-    - wget -q https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
-    - chmod +x ./buildifier
-    - sudo ln -s /usr/bin/bazel-3.4.1 /usr/bin/bazel
+  - wget -q https://github.com/bazelbuild/buildtools/releases/download/3.4.0/buildifier
+  - chmod +x ./buildifier
+  - sudo ln -s /usr/bin/bazel-3.4.1 /usr/bin/bazel
 
 script:
-  -./publish/travis_check.sh
+  - chmod +x ./publish/travis_check.sh ./publish/command_status.sh
+  - ./publish/travis_check.sh
