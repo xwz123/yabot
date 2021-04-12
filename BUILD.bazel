@@ -1,4 +1,47 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
-
+load("//:def.bzl", "common_single_push_image","single_tags","single_image_tags")
 # gazelle:prefix github.com/opensourceways/yabot
 gazelle(name = "gazelle")
+
+config_setting(
+    name = "gitee_hook_push",
+    defaule_values = {"img:": "gitee-hook"}
+)
+
+config_setting(
+    name = "github_hook_push",
+    defaule_values = {"img:": "github-hook"}
+)
+
+# this target wile do build modlue image and push the  image to img repo,
+# usage bazel build run //:single-push --define img= gitee-hook
+common_single_push_image(
+    name = "single-push",
+    images = select({
+        ":gitee_hook_push": single_tags(
+                        platform= "gitee",
+                        cmds= {"hook": "//gitee/cmd/hook:image"}),
+        ":github_hook_push": single_tags(
+                        platform = "github",
+                        cmds = {"hook": "//prow/cmd/hook:image"}),
+        "//conditions:default": {},
+    }),
+    image_targets = select({
+        ":gitee_hook_push": single_image_tags(
+                        platform= "gitee",
+                        cmds= {"hook": "//gitee/cmd/hook:image"}),
+         ":github_hook_push": single_image_tags(
+                         platform = "github",
+                         cmds = {"hook": "//prow/cmd/hook:image"}),
+         "//conditions:default": [],
+    }),
+    image_target_strings = select({
+        ":gitee_hook_push": single_image_tags(
+                        platform= "gitee",
+                        cmds= {"hook": "//gitee/cmd/hook:image"}),
+        ":github_hook_push": single_image_tags(
+                        platform= "github",
+                        cmds= {"hook": "//prow/cmd/hook:image"}),
+        "//conditions:default":[]
+    })
+)

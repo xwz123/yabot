@@ -13,7 +13,7 @@
 # limitations under the License.
 
 load("@io_bazel_rules_docker//container:image.bzl", "container_image")
-load("@io_bazel_rules_docker//container:bundle.bzl", "container_bundle")
+load("@io_bazel_rules_docker//container:bundle.bzl", "container_bundle","container_bundle_")
 load("@io_bazel_rules_docker//contrib:push-all.bzl", "container_push")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load(
@@ -104,3 +104,33 @@ def single_tags(platform,cmds):
     else:
         cmd_targs.update({platform_prefix(platform,p): t for (p,t) in cmds.items()})
     return _image_tags(cmd_targs)
+
+def single_image_tags(
+        platform,
+        cmds):
+    st = single_tags(platform,cmds)
+    sit = {value:None for value in st.values()}.keys()
+return sit
+
+
+# is a configurable build attributes macro for
+# build a single image and push to the image repository
+def common_single_push_image(
+        name,
+        bundle_name = "bundle",
+        images= None,
+        image_targets = None,
+        image_target_strings = None,
+        ):
+    container_bundle_(
+        name = bundle_name,
+        images = images,
+        image_targets = image_targets,
+        image_target_strings = image_target_strings,
+        tar_output = name + ".tar"
+   )
+    container_push(
+        name = name,
+        bundle = ":" + bundle_name,
+        format = "Docker",
+    )
