@@ -1271,8 +1271,8 @@ def go_dependencies():
         build_file_generation = "on",
         build_file_proto_mode = "disable",
         importpath = "github.com/google/go-cmp",
-        sum = "h1:xsAVV57WRhGj6kEIi8ReJzQlHHqcBYCElAvkovg3B/4=",
-        version = "v0.4.0",
+        sum = "h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=",
+        version = "v0.5.6",
     )
     go_repository(
         name = "com_github_google_go_containerregistry",
@@ -3847,4 +3847,10 @@ def go_dependencies():
         importpath = "github.com/huaweicloud/golangsdk",
         sum = "h1:CBrAHWGyqIEEh6xvoplHpCX28EE50yApRC1AwqOvc2s=",
         version = "v0.0.0-20210302113304-41351a12edfc",
+    )
+    go_repository(
+        name = "com_github_google_go_github_v36",
+        importpath = "github.com/google/go-github/v36",
+        sum = "h1:ndCzM616/oijwufI7nBRa+5eZHLldT+4yIB68ib5ogs=",
+        version = "v36.0.0",
     )

@@ -19,6 +19,7 @@ package plugins
 import (
 	"errors"
 	"fmt"
+	"github.com/opensourceways/yabot/prow/client"
 	"io/ioutil"
 	"sync"
 	"time"
@@ -143,6 +144,7 @@ type Agent struct {
 	GitClient                 git.ClientFactory
 	SlackClient               *slack.Client
 	BugzillaClient            bugzilla.Client
+	GoGithubClient            client.Client
 
 	OwnersClient repoowners.Interface
 
@@ -167,6 +169,7 @@ func NewAgent(configAgent *config.Agent, pluginConfigAgent *ConfigAgent, clientA
 	prowConfig := configAgent.Config()
 	pluginConfig := pluginConfigAgent.Config()
 	gitHubClient := clientAgent.GitHubClient.WithFields(logger.Data).ForPlugin(plugin)
+	goGitHubClient := clientAgent.GoGitHubClient.WithFields(logger.Data).ForPlugin(plugin)
 	return Agent{
 		GitHubClient:              gitHubClient,
 		KubernetesClient:          clientAgent.KubernetesClient,
@@ -176,6 +179,7 @@ func NewAgent(configAgent *config.Agent, pluginConfigAgent *ConfigAgent, clientA
 		SlackClient:               clientAgent.SlackClient,
 		OwnersClient:              clientAgent.OwnersClient.WithFields(logger.Data).WithGitHubClient(gitHubClient),
 		BugzillaClient:            clientAgent.BugzillaClient,
+		GoGithubClient:            goGitHubClient,
 		Metrics:                   metrics,
 		Config:                    prowConfig,
 		PluginConfig:              pluginConfig,
@@ -211,6 +215,7 @@ type ClientAgent struct {
 	SlackClient               *slack.Client
 	OwnersClient              repoowners.Interface
 	BugzillaClient            bugzilla.Client
+	GoGitHubClient            client.Client
 }
 
 // ConfigAgent contains the agent mutex and the Agent configuration.

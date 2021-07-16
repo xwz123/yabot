@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	sdk "github.com/google/go-github/v36/github"
 	"github.com/sirupsen/logrus"
 	"k8s.io/test-infra/prow/config"
 	"k8s.io/test-infra/prow/github"
@@ -46,12 +47,12 @@ type githubClient interface {
 	AddLabel(owner, repo string, number int, label string) error
 	CreateComment(owner, repo string, number int, comment string) error
 	RemoveLabel(owner, repo string, number int, label string) error
-	ListPRCommits(org, repo string, number int) ([]github.RepositoryCommit, error)
-	GetIssueLabels(org, repo string, number int) ([]github.Label, error)
+	ListPRCommits(org, repo string, number int) ([]*sdk.RepositoryCommit, error)
+	GetIssueLabels(org, repo string, number int) ([]*sdk.Label, error)
 }
 
 func handleGenericCommentEvent(pc plugins.Agent, e github.GenericCommentEvent) error {
-	return handleGenericComment(pc.GitHubClient, pc.PluginConfig, pc.Logger, e)
+	return handleGenericComment(pc.GoGithubClient, pc.PluginConfig, pc.Logger, e)
 }
 
 func handleGenericComment(gc githubClient, config *plugins.Configuration, log *logrus.Entry, e github.GenericCommentEvent) error {
@@ -83,8 +84,8 @@ func handleGenericComment(gc githubClient, config *plugins.Configuration, log *l
 	if err != nil {
 		log.WithError(err).Error("Failed to get issue labels.")
 	}
-	hasCLAYes := github.HasLabel(cfg.CLALabelYes, labels)
-	hasCLANo := github.HasLabel(cfg.CLALabelNo, labels)
+	hasCLAYes := plugins.HasLabel(cfg.CLALabelYes, labels)
+	hasCLANo := plugins.HasLabel(cfg.CLALabelNo, labels)
 
 	comment, err := getPrCommitsAbout(gc, org, repo, prNumber, cfg)
 	if err != nil {
@@ -125,7 +126,7 @@ func handleGenericComment(gc githubClient, config *plugins.Configuration, log *l
 func handlePullRequestEvent(pc plugins.Agent, pre github.PullRequestEvent) error {
 	return handlePullRequest(
 		pc.Logger,
-		pc.GitHubClient,
+		pc.GoGithubClient,
 		pc.PluginConfig,
 		&pre,
 	)
@@ -174,11 +175,12 @@ func getPrCommitsAbout(gc githubClient, org, repo string, number int, cfg *plugi
 		return "", err
 	}
 
-	cm := map[string]*github.RepositoryCommit{}
-	for i := range commits {
-		v := &commits[i]
-
-		email := v.Author.Email
+	cm := map[string]*sdk.RepositoryCommit{}
+	for _, v := range commits {
+		email := ""
+		if v.Commit.Author.Email != nil{
+			email = *v.Commit.Author.Email
+		}
 		if _, ok := cm[email]; !ok {
 			cm[email] = v
 		}
@@ -193,10 +195,10 @@ func getPrCommitsAbout(gc githubClient, org, repo string, number int, cfg *plugi
 		return "", nil
 	}
 
-	return signGuide(cfg.SignURL, "gitub", generateUnSignComment(unSigned, cm)), nil
+	return signGuide(cfg.SignURL, "github", generateUnSignComment(unSigned, cm)), nil
 }
 
-func checkCommitsSigned(commits map[string]*github.RepositoryCommit, checkURL string) ([]string, error) {
+func checkCommitsSigned(commits map[string]*sdk.RepositoryCommit, checkURL string) ([]string, error) {
 	if len(commits) == 0 {
 		return nil, fmt.Errorf("commits is empty, cla cannot be checked")
 	}
@@ -244,11 +246,11 @@ func isSigned(email, url string) (bool, error) {
 	return v.Data.Signed, nil
 }
 
-func generateUnSignComment(unSigned []string, commits map[string]*github.RepositoryCommit) string {
+func generateUnSignComment(unSigned []string, commits map[string]*sdk.RepositoryCommit) string {
 	if len(unSigned) == 1 {
 		return fmt.Sprintf(
 			"The author(**%s**) of commit needs to sign cla.",
-			commits[unSigned[0]].Author.Login)
+			*commits[unSigned[0]].Author.Login)
 	}
 
 	cs := make([]string, 0, len(unSigned))
@@ -256,7 +258,7 @@ func generateUnSignComment(unSigned []string, commits map[string]*github.Reposit
 		commit := commits[v]
 		cs = append(cs, fmt.Sprintf(
 			"The author(**%s**) of commit [%s](%s) need to sign cla.",
-			commit.Author.Login, commit.SHA[:8], commit.HTMLURL))
+			*commit.Author.Login, (*commit.SHA)[:8], *commit.HTMLURL))
 	}
 	return strings.Join(cs, "\n")
 

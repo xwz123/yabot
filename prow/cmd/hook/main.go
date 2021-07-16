@@ -37,6 +37,7 @@ import (
 	"k8s.io/test-infra/prow/repoowners"
 	"k8s.io/test-infra/prow/slack"
 
+	"github.com/opensourceways/yabot/prow/client"
 	"github.com/opensourceways/yabot/prow/hook"
 	pluginhelp "github.com/opensourceways/yabot/prow/pluginhelp/hook"
 	"github.com/opensourceways/yabot/prow/plugins"
@@ -131,6 +132,11 @@ func main() {
 	if err != nil {
 		logrus.WithError(err).Fatal("Error getting GitHub client.")
 	}
+	goGithubClient, err := client.NewClientWithSecretAndLogFields(secretAgent, logrus.Fields{}, o.github.TokenPath)
+	if err != nil {
+		logrus.WithError(err).Fatal("Error getting GitHub client.")
+	}
+
 	gitClient, err := o.github.GitClient(secretAgent, o.dryRun)
 	if err != nil {
 		logrus.WithError(err).Fatal("Error getting Git client.")
@@ -190,6 +196,7 @@ func main() {
 		SlackClient:               slackClient,
 		OwnersClient:              ownersClient,
 		BugzillaClient:            bugzillaClient,
+		GoGitHubClient:            goGithubClient,
 	}
 
 	promMetrics := hook.NewMetrics()

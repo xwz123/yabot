@@ -21,6 +21,7 @@ replace (
 require (
 	gitee.com/openeuler/go-gitee v0.0.0-20210226091009-de349c8d2916
 	github.com/antihax/optional v1.0.0
+	github.com/google/go-github/v36 v36.0.0
 	github.com/huaweicloud/golangsdk v0.0.0-20210302113304-41351a12edfc
 	github.com/prometheus/client_golang v1.5.0
 	github.com/sirupsen/logrus v1.4.2

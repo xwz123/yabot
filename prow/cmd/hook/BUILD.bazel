@@ -13,6 +13,7 @@ go_library(
     importpath = "github.com/opensourceways/yabot/prow/cmd/hook",
     visibility = ["//visibility:private"],
     deps = [
+        "//prow/client:go_default_library",
         "//prow/hook:go_default_library",
         "//prow/pluginhelp/hook:go_default_library",
         "//prow/plugins:go_default_library",
